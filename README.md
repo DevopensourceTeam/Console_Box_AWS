@@ -1,9 +1,22 @@
-# Console Box AWS
+# ![Icon](public/components/cbaws-icono.svg)  Console Box AWS 
 
-* First install all node dependencies with yarn.
+***
+Console Box AWS is an application that allows you to open different `AWS` sessions in the same window.
+
+You create a workspace to work with an aws session and inside you have a full browser to navigate. You can create as many workspaces as you want.
+
+***
+
+![gif](Screenshots/CBAWS-demo.gif) 
+
+***
+
+
 
 ## Available Scripts
 
+* First install all node dependencies with yarn.
+* 
 In the project directory, you can run:
 
 ### `yarn dev`
