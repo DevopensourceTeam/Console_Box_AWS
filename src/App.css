@@ -1,0 +1,140 @@
+.App {
+  text-align: center;
+  display: 'flex';
+}
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.appbar {
+  color: red;
+  z-index:  10;
+  background-color: red;
+}
+
+.drawer div {
+  z-index: 1;
+  background-color: #23303D;
+  width: 72px;
+}
+
+.active {
+  background-color: #0099FF!important;
+}
+
+.App-content{
+  background-color: #FFFFFF;
+  width: 90%;
+  height: 100%;
+  flex: 1;
+  position: absolute;
+  margin-left: 77px;
+}
+
+.App-img {
+  background-image: url('./views/assets/img/ilustration.png');
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.App-spin {
+  width: 200px!important;
+  height: 200px!important;
+  color: #FF9735!important;
+  position: absolute;
+  top: 50%;
+  left: 35%;
+  margin-top: -100px;
+}
+
+.icon{
+  color: white;
+}
+
+.Dim-screen{
+  position:fixed;
+  padding:0;
+  margin:0;
+
+  top:0;
+  left:0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.webview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: inline-flex !important;
+}
+
+.workspace-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.workspace-img:hover{
+  box-shadow: 0 0 3pt 2pt #FF9735;
+  border-radius: 5px;
+  opacity: 1;
+}
+.bt{
+  padding: 0px!important;
+}
+Button{
+  padding: 0px!important;
+}
+.bttn img{
+  cursor: pointer;
+}
+.bttn img:hover{
+  opacity: 1!important;
+}
+
+.workspaceName{
+  color: #FFFFFF;
+  margin-top: -20px;
+  margin-bottom: -30px;
+  background-color: transparent!important;
+}
+
+li {
+  flex-direction: column;
+}
+
+.actions{
+  position: absolute;
+  z-index: 2;
+  margin-left: 10px;
+}
+
+.add{
+  color: #FFFFFF!important;
+}
+
+.add:hover{
+  color: #FF9735!important;
+}

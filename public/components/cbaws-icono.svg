@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="74px" height="74px" viewBox="0 0 74 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
+    <title>icono</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFA220" offset="0%"></stop>
+            <stop stop-color="#D47800" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="icono" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cbaws-black" transform="translate(3.000000, 0.000000)" fill="url(#linearGradient-1)">
+            <g id="Group" opacity="0.3" transform="translate(0.000000, 14.015625)">
+                <g id="path-0-link">
+                    <path d="M6.46875,0 L53.90625,0 C57.4764503,0 60.375,2.89854969 60.375,6.46875 L60.375,53.9065066 C60.375,57.4767069 57.4764503,60.3752566 53.90625,60.3752566 L6.46875,60.3752566 C2.89854969,60.3752566 9.57567359e-16,57.4767069 0,53.9065066 L0,6.46875 C0,2.89854969 2.89854969,0 6.46875,0 Z" id="path-0"></path>
+                </g>
+            </g>
+            <g id="Group" opacity="0.61" transform="translate(4.312500, 7.546875)">
+                <g id="path-2-link">
+                    <path d="M6.46875,0 L53.90625,0 C57.4764503,0 60.375,2.89854969 60.375,6.46875 L60.375,53.9065066 C60.375,57.4767069 57.4764503,60.3752566 53.90625,60.3752566 L6.46875,60.3752566 C2.89854969,60.3752566 9.57567359e-16,57.4767069 0,53.9065066 L0,6.46875 C0,2.89854969 2.89854969,0 6.46875,0 Z" id="path-2"></path>
+                </g>
+            </g>
+            <g id="path-4-link" transform="translate(8.625000, 0.000000)">
+                <path d="M6.46842923,0 L53.9059292,0 C57.4761295,0 60.3746792,2.89854969 60.3746792,6.46875 L60.3746792,53.9065066 C60.3746792,57.4767069 57.4761295,60.3752566 53.9059292,60.3752566 L6.46842923,60.3752566 C2.89822891,60.3752566 -0.000320774114,57.4767069 -0.000320774114,53.9065066 L-0.000320774114,6.46875 C-0.000320774114,2.89854969 2.89822891,0 6.46842923,0 Z" id="path-4"></path>
+            </g>
+        </g>
+    </g>
+</svg>
