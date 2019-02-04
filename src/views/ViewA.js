@@ -31,7 +31,9 @@ const Store = window.require('electron-store');
 const store = new Store();
 /* Store */
 
-
+/* DEV */
+const isDev = window.require('electron-is-dev');
+/* DEV */
 
 /** **/
 window.React = React;
@@ -127,7 +129,8 @@ class ViewA extends React.Component {
       test.setBrowserView(view);
 
       /* ------------------------------------------------------------------------------ SWITCH DEV ---------------------------------------------------------------------------- */
-      view.webContents.loadURL(`http://localhost:3000?view=viewB&session=${workSpace}`);
+      isDev? view.webContents.loadURL(`http://localhost:3000?view=viewB&session=${workSpace}`) : view.webContents.loadURL(`file://${path.join(remote.app.getAppPath(), `./build/index.html?view=viewB&session=${workSpace}`)}`);
+      //view.webContents.loadURL(`http://localhost:3000?view=viewB&session=${workSpace}`);
       //view.webContents.loadURL(`file://${path.join(remote.app.getAppPath(), `./build/index.html?view=viewB&session=${workSpace}`)}`);
       /* ------------------------------------------------------------------------------ SWITCH DEV ---------------------------------------------------------------------------- */
 
