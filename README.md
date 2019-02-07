@@ -63,3 +63,12 @@ Your app is ready to be packaged!
 Package and create the executables for windows and mac in the dist folder.
 
 ***
+
+## Releases
+
+Check here new [releases](https://github.com/DevopensourceTeam/Console_Box_AWS/releases)
+
+***
+
+## License
+[MIT](https://github.com/DevopensourceTeam/Console_Box_AWS/blob/master/LICENSE)

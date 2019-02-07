@@ -1,10 +1,11 @@
 {
 	"name": "CBAWS",
-	"version": "0.1.6",
+	"version": "0.1.8",
 	"author": "Alejandro Jimenez Marques",
 	"private": true,
 	"homepage": "./",
 	"main": "public/electron.js",
+	"license": "MIT",
 	"dependencies": {
 		"@material-ui/core": "^3.8.1",
 		"@material-ui/icons": "^3.0.1",

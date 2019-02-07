@@ -261,6 +261,7 @@ class ViewA extends React.Component {
       if(typeof(images) == 'undefined'){
         var imgs = {};
         imgs[workspace] = b64;
+        this.setState({images: imgs});
         store.set('images', imgs);
       }else{
           images[workspace] = b64;
