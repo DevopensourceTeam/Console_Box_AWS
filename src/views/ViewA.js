@@ -69,6 +69,9 @@ class ViewA extends React.Component {
     let workspacesStore = store.get('workspaces');
     let imagesStore = store.get('images');
     if(typeof(workspacesStore)!=='undefined'){
+      for(let w in workspacesStore){
+        workspacesStore[w] = 0;
+      }
       this.setState({workSpaces: workspacesStore});
     }
     //console.log(workspacesStore);
@@ -230,10 +233,12 @@ class ViewA extends React.Component {
     let children = [];
     for(let workspace in this.state.workSpaces){
       children.push(
-        <ListItem className="bttn" key={workspace}>
-          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/" >
+        <ListItem className="bttn" key={workspace} style={{borderRadius: 5, borderLeft: this.activeColor(workspace) === 1 ? '2px solid #FF9735' : 'none', borderRight: this.activeColor(workspace) === 1 ? '2px solid rgba(255, 151, 53, 0.000)' : 'none'}}>
+          {/*<span style={{borderLeft: this.activeColor(workspace) === 1 ? '1px dotted white' : 'none'}}></span>*/}
+          <div style={{backgroundImage: 'red', position:'absolute', left:0, width: 2}}></div>
+          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/">
             <Tooltip title={workspace} enterDelay={700} leaveDelay={200} placement="bottom">
-              <img style={{opacity:this.activeColor(workspace)}} alt={workspace} className="workspace-img" src={this.getImageBase64(workspace)} />
+              <img style={{opacity:this.activeColor(workspace), backgroundColor:'#FFFFFF'}} alt={workspace} className="workspace-img" src={this.getImageBase64(workspace)} />
               {/*this.getImageBase64(workspace)*/}
             </Tooltip>
           </a>
