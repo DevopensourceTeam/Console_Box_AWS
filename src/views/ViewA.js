@@ -47,6 +47,8 @@ const test = BrowserWindow.getAllWindows()[0];
 const path = require('path');
 const url = require('url');
 
+const ipc = window.require('electron').remote.ipcMain;
+
 const noIMG = require('./assets/img/NO-IMAGE.jpg');
 
 class ViewA extends React.Component {
@@ -74,19 +76,26 @@ class ViewA extends React.Component {
       }
       this.setState({workSpaces: workspacesStore});
     }
-    //console.log(workspacesStore);
     if(typeof(imagesStore)!=='undefined'){
       this.setState({ images: imagesStore})
     }
   }
-  /*
+  
   componentDidMount = () => {
-    console.log('workspaces',this.state.workSpaces);
-    if(typeof(this.first(this.state.workSpaces))!== undefined){
-      this.openWorkSpace(this.first(this.state.workSpaces));
-    }
+    ipc.on('update-image', (event, arg) => {
+      var images = store.get('images');
+      this.setState({images: images})
+      console.log(arg[1]);
+      console.log(arg[0]);
+      console.log(arg);
+    })
+
   }
-*/
+
+  componentWillUnmount = () => {
+    ipc.removeAllListeners();
+  }
+
   /* Get 1st JSON object */
   first = (state) => {
     var i=0;

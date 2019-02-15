@@ -17,6 +17,13 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import VerticalSplitIcon from '@material-ui/icons/VerticalSplit';
 /* NAVBAR */
+/** DIALOG **/
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button';
+/** DIALOG **/
 const { remote } = window.require('electron');
 /* STORE */
 const Store = window.require('electron-store');
@@ -26,15 +33,19 @@ const store = new Store();
 window.React = React;
 const { BrowserWindow, BrowserView } = window.require('electron').remote;
 
+const ipc = window.require('electron').ipcRenderer;
+
 export default class ViewB extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
       anchorEl: null,
-			session : props.session,
+      session : props.session,
+      workspaceImage: '',
+      open: false,
 			tabs:[
-        (<Tab key={'tab0'} title={'Fixed - ' + props.session} unclosable={true}>
+        (<Tab key={'tab0'} title={'Fixed - ' + props.session} >
           <AppBar position="static" className="AppBar">
             <Toolbar className="Toolbar">
               <IconButton onClick={()=>{this.goBack('tab0')}}>
@@ -237,6 +248,47 @@ export default class ViewB extends React.Component {
   
   /* APPBAR */
 
+  /* CHANGE IMAGE */
+  changeImage = async () => {
+    var b64;
+    if(this.state.workspaceImage !== ''){
+      b64 = await this.getBase64(this.state.workspaceImage);
+    }else{
+      b64 = '';
+    }
+    var images = store.get('images');
+    if(b64){
+      images[this.state.session] = b64;
+      await store.set('images', images);
+      ipc.send('update-image', [this.state.session]);
+    }
+    this.handleCloseImg();
+    this.handleClose();
+  }
+
+  getBase64 = async (file) => {
+    return new Promise((resolve,reject) => {
+       const reader = new FileReader();
+       reader.onload = () => resolve(reader.result);
+       reader.onerror = error => reject('');
+       reader.readAsDataURL(file);
+    });
+  }
+
+  fileChangedHandler = (event) => {
+    const file = event.target.files[0];
+    this.setState({workspaceImage: file});
+  }
+
+  handleOpen = () => {
+    this.setState({open: true});
+  }
+
+  handleCloseImg = () => {
+    this.setState({open: false, workspaceImage:''});
+  }
+  /* CHANGE IMAGE */
+
 	render() {
     const { anchorEl } = this.state;
     
@@ -308,9 +360,26 @@ export default class ViewB extends React.Component {
         open={Boolean(anchorEl)}
         onClose={this.handleClose}
         >
-          <MenuItem onClick={() => { this.loadImage('../icon-devo.png')}}>Change workspace image</MenuItem>
+          <MenuItem onClick={() => { this.handleOpen()}}>Change workspace image</MenuItem>
           <MenuItem onClick={() => {this._deteteWorkspace()}}>Delete workspace</MenuItem>
         </Menu>
+        <Dialog open={this.state.open} onClose={() => this.handleCloseImg()} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Change workspace image</DialogTitle>
+            <DialogContent>
+              <Button variant="contained" component="label">
+                Select image
+                <input type="file" accept="image/*" style={{ display: "none" }} onChange={this.fileChangedHandler}/>
+              </Button>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => this.handleCloseImg()} color="secondary">
+                Cancel
+              </Button>
+              <Button onClick={() => this.changeImage()} color="primary">
+                Change
+              </Button>
+            </DialogActions>
+          </Dialog>
 			</div>
 			
 	  )
