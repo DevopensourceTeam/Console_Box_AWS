@@ -414,7 +414,7 @@ export default class ViewB extends React.Component {
 
   renderBookmarkList = (key) => {
     let children = [];
-    if(this.state.bookmarks.length==0){
+    if(typeof this.state.bookmarks === 'undefined' || this.state.bookmarks.length==0){
       children.push(
         <MenuItem key={0} onClick={() => { this.handleBookmarkListClose()}}>No bookmarks saved</MenuItem>
         );
