@@ -142,7 +142,7 @@ class ViewA extends React.Component {
     if(view){
       test.setBrowserView(view);
       view.setBounds({ x: 73, y: 0, width: test.getSize()[0]-73, height: test.getSize()[1]-26 });
-      //view.webContents.openDevTools();
+      view.webContents.openDevTools();
       this.setActive(workSpace);
     }else{
       let view = new BrowserView({

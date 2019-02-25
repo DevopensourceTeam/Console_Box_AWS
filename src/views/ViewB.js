@@ -44,10 +44,15 @@ export default class ViewB extends React.Component {
 
 	constructor(props) {
     super(props);
-    var bkmrk = store.get('bookmarks');
-    if(typeof bkmrk == 'undefined'){
+    var bkmrk = [];
+    var stor = store.get('bookmarks');
+
+    if(typeof stor === 'undefined'){
       bkmrk = []
+    }else{
+      bkmrk = stor;
     }
+    console.log('**************', bkmrk);
 		this.state = {
       anchorEl: null,
       bookmarkEl: null,
@@ -61,8 +66,8 @@ export default class ViewB extends React.Component {
   }
 
   componentWillMount = () => {
-    var bkmrk = store.get('bookmarks');
-    this.setState({bookmarks: bkmrk});
+    //var bkmrk = store.get('bookmarks');
+    //this.setState({bookmarks: bkmrk});
 
     var tabs = this.state.tabs;
     var tab0 = (<Tab key={'tab0'} title={'Fixed - ' + this.props.session} >
@@ -172,7 +177,7 @@ export default class ViewB extends React.Component {
     // key must be unique
     
     const key = 'newTab_' + Date.now();
-
+    console.log('**************', this.state.bookmarks);
     let newTab = (<Tab key={key} title={this.state.session}>
                     <AppBar position="static" className="AppBar">
                       <Toolbar className="Toolbar">
@@ -336,6 +341,7 @@ export default class ViewB extends React.Component {
 
   addFavorite = (key) => {
     var bookmark = this.state.bookmarks;
+    
     var index = this.getIndexBookmark(this[key].getURL());
     if(index < 0){
       bookmark.push({url: this[key].getURL(), name: this[key].getTitle()});
@@ -347,6 +353,7 @@ export default class ViewB extends React.Component {
       store.set('bookmarks', bookmark);
     }
     for(let tab of this.state.tabs){
+      console.log('*****',this.state.bookmarks);
       this[tab.key+'-star'].bookmarks(this.state.bookmarks);
     }
   }
@@ -356,7 +363,6 @@ export default class ViewB extends React.Component {
     if(typeof this[key].getURL() === 'undefined'){
       return <StarBorder className="icon" />
     }else{
-      
       return this.state.bookmarks.indexOf(this[key].getURL()) < 0? <StarBorder className="icon" /> : <Star className="icon" />;
     }
   }catch(err){return <StarBorder className="icon" />}
@@ -365,8 +371,9 @@ export default class ViewB extends React.Component {
   /* ADD FAVORITE */
   /* BOOKmARKS */
   getBookmark = (code) => {
+    
     if(typeof code !== 'undefined'){
-      
+      console.log(this.state.bookmarks);
       var output = this.state.bookmarks.filter(
         (bookmarks) => {
           if(code.includes('http')){

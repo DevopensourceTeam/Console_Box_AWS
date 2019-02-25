@@ -31,7 +31,8 @@ export default class StarButton extends React.Component {
 		
 	}
 
-	  /* BOOKmARKS */
+		/* BOOKmARKS */
+		/*
 	  getBookmark = (code) => {
 		if(typeof code !== 'undefined'){
 		  
@@ -53,8 +54,10 @@ export default class StarButton extends React.Component {
 		  return -1;
 		}
 	  }
-	  
+	  */
 	  getIndexBookmark = (code) => {
+			console.log(code);
+			
 		if(typeof code !== 'undefined'){ 
 		  var output = this.state.bookmarks.filter(
 			(bookmarks) => {
