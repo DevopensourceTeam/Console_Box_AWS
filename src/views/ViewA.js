@@ -6,7 +6,7 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Tooltip from '@material-ui/core/Tooltip';
-
+import ListItemText from '@material-ui/core/ListItemText';
 /** DIALOG **/
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -48,6 +48,7 @@ const path = require('path');
 const url = require('url');
 
 const ipc = window.require('electron').remote.ipcMain;
+const globalShortcut = window.require('electron').remote.globalShortcut;
 
 const noIMG = require('./assets/img/NO-IMAGE.jpg');
 
@@ -79,6 +80,13 @@ class ViewA extends React.Component {
     if(typeof(imagesStore)!=='undefined'){
       this.setState({ images: imagesStore})
     }
+    var i = 1;
+    for(let w in workspacesStore){
+      globalShortcut.register('CommandOrControl+'+i, () => {
+        this.openWorkSpace(w)
+      })
+      i++;
+    }
   }
   
   componentDidMount = () => {
@@ -88,12 +96,20 @@ class ViewA extends React.Component {
       console.log(arg[1]);
       console.log(arg[0]);
       console.log(arg);
-    })
+    });
 
+    
   }
 
   componentWillUnmount = () => {
     ipc.removeAllListeners();
+    globalShortcut.unregisterAll();
+    alert('unmount')
+  }
+
+
+  workspacesShortcut = (quantity) => {
+
   }
 
   /* Get 1st JSON object */
@@ -240,19 +256,31 @@ class ViewA extends React.Component {
 
   _renderWorkspaces = () => {
     let children = [];
+    var os = require('os');
+    console.log('plataforma: ',remote.process.platform);
+    //alert(Object.keys(this.state.workSpaces).length);
+    var text = remote.process.platform == 'darwin' ? 'cmd' : 'ctrl';
+    var i =1;
+    globalShortcut.unregisterAll();
     for(let workspace in this.state.workSpaces){
       children.push(
-        <ListItem className="bttn" key={workspace} style={{borderRadius: 5, borderLeft: this.activeColor(workspace) === 1 ? '2px solid #FF9735' : 'none', borderRight: this.activeColor(workspace) === 1 ? '2px solid rgba(255, 151, 53, 0.000)' : 'none'}}>
+        <ListItem className="bttn" key={workspace} >
           {/*<span style={{borderLeft: this.activeColor(workspace) === 1 ? '1px dotted white' : 'none'}}></span>*/}
-          <div style={{backgroundImage: 'red', position:'absolute', left:0, width: 2}}></div>
-          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/">
+          <div style={{backgroundImage: 'red', borderRadius: 8, borderLeft: this.activeColor(workspace) === 1 ? '6px solid #FF9735' : 'none', textAlign:'center'}}>
+          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/" style={{marginLeft: this.activeColor(workspace) === 1 ? '-6px': '0px'}}>
             <Tooltip title={workspace} enterDelay={700} leaveDelay={200} placement="bottom">
               <img style={{opacity:this.activeColor(workspace), backgroundColor:'#FFFFFF'}} alt={workspace} className="workspace-img" src={this.getImageBase64(workspace)} />
               {/*this.getImageBase64(workspace)*/}
             </Tooltip>
           </a>
+          </div>
+          <ListItemText className="secondary" secondary={`${text}+${i}`} style={{color: 'red', textAlign: 'center'}}/>
         </ListItem>
       );
+      globalShortcut.register('CommandOrControl+'+i, () => {
+        this.openWorkSpace(workspace)
+      })
+      i++;
     };
     return children;
   }

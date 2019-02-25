@@ -26,7 +26,8 @@
   border-radius: 4px;
   background-color: rgba(255, 255, 255, 0.15);
   height: 30px;
-  padding-right: 20px;
+  padding-right: 7px;
+  display: inline-flex;
 }
 
 .searchIcon {

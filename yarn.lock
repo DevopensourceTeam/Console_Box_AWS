@@ -3587,6 +3587,11 @@ electron-download@^4.1.0:
     semver "^5.4.1"
     sumchecker "^2.0.2"
 
+electron-in-page-search@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/electron-in-page-search/-/electron-in-page-search-1.3.2.tgz#4a69e61bb63e2ea41c5d48dec4e54cb42f673448"
+  integrity sha512-gHZtUV3t5g3UXndAOUC+QM0ZzvB43mtKvba4zig65SsOnYqu1G5SMeRq41OIKnDftZN8iXD0NgTzuK3fWh4F8g==
+
 electron-is-dev@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-1.0.1.tgz#6e0a184736fe7aea77d18210b0b0f6a02402c4bc"
@@ -7045,7 +7050,7 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   dependencies:
     minimist "0.0.8"
 
-mousetrap@^1.6.1:
+mousetrap@^1.6.1, mousetrap@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.2.tgz#caadd9cf886db0986fb2fee59a82f6bd37527587"
   integrity sha512-jDjhi7wlHwdO6q6DS7YRmSHcuI+RVxadBkLt3KHrhd3C2b+w5pKefg3oj5beTcHZyVFA9Aksf+yEE1y5jxUjVA==

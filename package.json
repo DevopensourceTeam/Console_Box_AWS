@@ -1,6 +1,6 @@
 {
 	"name": "CBAWS",
-	"version": "0.1.9",
+	"version": "0.1.10",
 	"author": "Alejandro Jimenez Marques",
 	"private": true,
 	"homepage": "./",
@@ -9,8 +9,10 @@
 	"dependencies": {
 		"@material-ui/core": "^3.8.1",
 		"@material-ui/icons": "^3.0.1",
+		"electron-in-page-search": "^1.3.2",
 		"electron-is-dev": "^1.0.1",
 		"electron-store": "^2.0.0",
+		"mousetrap": "^1.6.2",
 		"query-string": "^6.2.0",
 		"react": "^16.7.0",
 		"react-dom": "^16.7.0",

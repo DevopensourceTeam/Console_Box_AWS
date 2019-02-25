@@ -1,4 +1,5 @@
 const electron = require('electron');
+
 const app = electron.app;
 //const { BrowserWindow, BrowserView} = electron.BrowserWindow;
 const { BrowserWindow, BrowserView} = require('electron');
@@ -6,6 +7,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 const Store = require('electron-store');
 const store = new Store();
+const globalShortcut = electron.globalShortcut;
 
 let preloadWindow;
 let mainWindow;
@@ -47,6 +49,7 @@ function createWindow() {
 	});
 	//Menu allow copy paste
 	require('./menu/mainMenu');
+
 }
 
 app.on('ready', createWindow);
@@ -55,6 +58,7 @@ app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
 		app.quit();
 	}
+	globalShortcut.unregisterAll();
 });
 
 app.on('activate', () => {
@@ -62,6 +66,3 @@ app.on('activate', () => {
 		createWindow();
 	}
 });
-
-
-

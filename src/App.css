@@ -138,3 +138,11 @@ li {
 .add:hover{
   color: #FF9735!important;
 }
+
+.secondary {
+  color: white;
+}
+
+.secondary p{
+  color: grey;
+}
