@@ -138,7 +138,7 @@ export default class ViewB extends React.Component {
     this['tab0'].addEventListener('dom-ready', ()=>{this.changeURL('tab0')});
     this['tab0'].addEventListener('context-menu', event => {
       console.log(event);
-      if(event.params.mediaType == 'image'){
+      if(event.params.mediaType === 'image'){
         console.log('Image URL: ', event.params.srcURL);
       }else{
         console.log('Link URL: ', event.params.linkURL);
@@ -248,12 +248,6 @@ export default class ViewB extends React.Component {
     win.destroy();
   }
   /* MENU */
-
-  /* LOAD IMAGE */
-  loadImage = (image) => {
-    var fr = new FileReader(); 
-  }
-  /* LOAD IMAGE */
 
   /* APPBAR */
   reload = (ref) => {
@@ -377,9 +371,9 @@ export default class ViewB extends React.Component {
       var output = this.state.bookmarks.filter(
         (bookmarks) => {
           if(code.includes('http')){
-            return bookmarks.url == code;
+            return bookmarks.url === code;
           }else{
-            return bookmarks.name == code;
+            return bookmarks.name === code;
           }
         }
       );
@@ -398,9 +392,9 @@ export default class ViewB extends React.Component {
       var output = this.state.bookmarks.filter(
         (bookmarks) => {
           if(code.includes('http')){
-            return bookmarks.url == code;
+            return bookmarks.url === code;
           }else{
-            return bookmarks.name == code;
+            return bookmarks.name === code;
           }
         }
       );
@@ -421,7 +415,7 @@ export default class ViewB extends React.Component {
 
   renderBookmarkList = (key) => {
     let children = [];
-    if(typeof this.state.bookmarks === 'undefined' || this.state.bookmarks.length==0){
+    if(typeof this.state.bookmarks === 'undefined' || this.state.bookmarks.length === 0){
       children.push(
         <MenuItem key={0} onClick={() => { this.handleBookmarkListClose()}}>No bookmarks saved</MenuItem>
         );
@@ -437,7 +431,6 @@ export default class ViewB extends React.Component {
   }
 
   bookmarkOpen = (url) => {
-    var activeTab = this.state.selectedTab;
     this[this.state.selectedTab ? this.state.selectedTab : 'tab0'].loadURL(url);
     this.handleBookmarkListClose();
   }

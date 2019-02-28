@@ -1,5 +1,4 @@
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import Star from '@material-ui/icons/Star';
 import StarBorder from '@material-ui/icons/StarBorder';
 
@@ -32,29 +31,6 @@ export default class StarButton extends React.Component {
 	}
 
 		/* BOOKmARKS */
-		/*
-	  getBookmark = (code) => {
-		if(typeof code !== 'undefined'){
-		  
-		  var output = this.state.bookmarks.filter(
-			(bookmarks) => {
-			  if(code.includes('http')){
-				return bookmarks.url == code;
-			  }else{
-				return bookmarks.name == code;
-			  }
-			}
-		  );
-		  if(code.includes('http')){
-			return output.length >0? output[0].name : -1;
-		  }else{
-			return output.length >0? output[0].url : -1;
-		  }
-		}else{
-		  return -1;
-		}
-	  }
-	  */
 	  getIndexBookmark = (code) => {
 			console.log(code);
 			
@@ -62,9 +38,9 @@ export default class StarButton extends React.Component {
 		  var output = this.state.bookmarks.filter(
 			(bookmarks) => {
 			  if(code.includes('http')){
-				return bookmarks.url == code;
+				return bookmarks.url === code;
 			  }else{
-				return bookmarks.name == code;
+				return bookmarks.name === code;
 			  }
 			}
 			);

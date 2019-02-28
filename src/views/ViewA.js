@@ -256,18 +256,16 @@ class ViewA extends React.Component {
 
   _renderWorkspaces = () => {
     let children = [];
-    var os = require('os');
     console.log('plataforma: ',remote.process.platform);
-    //alert(Object.keys(this.state.workSpaces).length);
-    var text = remote.process.platform == 'darwin' ? 'cmd' : 'ctrl';
+    var text = remote.process.platform === 'darwin' ? 'cmd' : 'ctrl';
     var i =1;
     globalShortcut.unregisterAll();
     for(let workspace in this.state.workSpaces){
       children.push(
         <ListItem className="bttn" key={workspace} >
           {/*<span style={{borderLeft: this.activeColor(workspace) === 1 ? '1px dotted white' : 'none'}}></span>*/}
-          <div style={{backgroundImage: 'red', borderRadius: 8, borderLeft: this.activeColor(workspace) === 1 ? '6px solid #FF9735' : 'none', textAlign:'center'}}>
-          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/" style={{marginLeft: this.activeColor(workspace) === 1 ? '-6px': '0px'}}>
+          <div style={{backgroundImage: 'red', borderRadius: 8, borderLeft: this.activeColor(workspace) === 1 ? '3px solid #FF9735' : 'none', textAlign:'center', width: this.activeColor(workspace) === 1 ? '69px' : '72px'}}>
+          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/" style={{marginLeft: this.activeColor(workspace) === 1 ? '-8px!important': 'none'}}>
             <Tooltip title={workspace} enterDelay={700} leaveDelay={200} placement="bottom">
               <img style={{opacity:this.activeColor(workspace), backgroundColor:'#FFFFFF'}} alt={workspace} className="workspace-img" src={this.getImageBase64(workspace)} />
               {/*this.getImageBase64(workspace)*/}
