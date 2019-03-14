@@ -52,6 +52,11 @@ const globalShortcut = window.require('electron').remote.globalShortcut;
 
 const noIMG = require('./assets/img/NO-IMAGE.jpg');
 
+const { Menu, MenuItem } = window.require('electron').remote
+//const menu = new Menu();
+const menu = Menu.getApplicationMenu();
+console.log('menu:', menu);
+
 class ViewA extends React.Component {
   constructor(props){
     super(props);
@@ -62,7 +67,7 @@ class ViewA extends React.Component {
       name: '',
       active: '',
       id: 1,
-      workSpaces: {},
+      workSpaces: [],
       images: {},
       res: [0, 0]
     }
@@ -72,21 +77,15 @@ class ViewA extends React.Component {
     let workspacesStore = store.get('workspaces');
     let imagesStore = store.get('images');
     if(typeof(workspacesStore)!=='undefined'){
-      for(let w in workspacesStore){
-        workspacesStore[w] = 0;
-      }
+      workspacesStore.map(w => {
+        w.id = 0;
+      });
       this.setState({workSpaces: workspacesStore});
     }
     if(typeof(imagesStore)!=='undefined'){
       this.setState({ images: imagesStore})
     }
-    var i = 1;
-    for(let w in workspacesStore){
-      globalShortcut.register('CommandOrControl+'+i, () => {
-        this.openWorkSpace(w)
-      })
-      i++;
-    }
+    
   }
   
   componentDidMount = () => {
@@ -97,20 +96,53 @@ class ViewA extends React.Component {
       console.log(arg[0]);
       console.log(arg);
     });
-
     
   }
 
   componentWillUnmount = () => {
     ipc.removeAllListeners();
     globalShortcut.unregisterAll();
-    alert('unmount')
   }
 
 
   workspacesShortcut = (quantity) => {
 
   }
+
+  /* WORKSPACES */
+
+  getIndexByName = (name) => {
+    
+    if(typeof name !== 'undefined'){ 
+      var output = this.state.workSpaces.filter(
+        (workSpaces) => {
+          return workSpaces.name === name;
+        }
+      );
+      return output.length >0? this.state.workSpaces.indexOf(output[0]) : -1;
+    }else{
+      return -1;
+    }
+  }
+  getWorkspaceByName = (name) => {
+    if(typeof name !== 'undefined'){ 
+      var output = this.state.workSpaces.filter(
+        (workSpaces) => {
+          return workSpaces.name === name;
+        }
+      );
+      return output.length >0? output[0] : -1;
+    }else{
+      return -1;
+    }
+  }
+
+  getWorkspaceByIndex = (index) => {
+    var workspace = this.state.workSpaces[index];
+    return typeof workspace === 'undefined'? -1 : this.state.workSpaces[index];
+  }
+
+  /* WORKSPACES */
 
   /* Get 1st JSON object */
   first = (state) => {
@@ -138,11 +170,12 @@ class ViewA extends React.Component {
 
   openWorkSpace = (workSpace) => {
     var test = BrowserWindow.getAllWindows()[0];
-    let view = BrowserView.fromId(this.state.workSpaces[workSpace]);
+    var workspace = this.getWorkspaceByName(workSpace);
+    let view = BrowserView.fromId(workspace.id);
     if(view){
       test.setBrowserView(view);
       view.setBounds({ x: 73, y: 0, width: test.getSize()[0]-73, height: test.getSize()[1]-26 });
-      view.webContents.openDevTools();
+      isDev? view.webContents.openDevTools():console.log('Production mode');
       this.setActive(workSpace);
     }else{
       let view = new BrowserView({
@@ -166,7 +199,8 @@ class ViewA extends React.Component {
       view.setAutoResize({width:true, height: true});
 
       var woorkspaces = this.state.workSpaces;
-      woorkspaces[workSpace] = view.id;
+      var woorkspacesIndex = this.getIndexByName(workspace.name);
+      woorkspaces[woorkspacesIndex].id = view.id;
       this.setState({workSpaces:woorkspaces});
 
       store.set('workspaces', woorkspaces);
@@ -200,24 +234,29 @@ class ViewA extends React.Component {
       var workspaces = this.state.workSpaces;
       
       // Check workspace already exists
-      if(typeof workspaces[name] !== 'undefined'){
+      if(this.getIndexByName(name) !== -1){
         alert('The name of this workspace already exists.')
       }else{
         
         this.setImage(this.state.name);
-        
-        workspaces[this.state.name]=0;
+        workspaces.push({name: this.state.name, id: 0})
         this.setState({workspaces: workspaces});
         
         store.set('workspaces', workspaces);
-
+        
         let window = BrowserWindow.getAllWindows()[0];
         window.setBrowserView(null);
         this.handleClose('create');
         this.openWorkSpace(this.state.name);
+        
       }
     }
   }
+
+  modifyMenuWorkspaces = () => {
+    var workspaceItems = menu.items[5].submenu.items;
+  }
+
   /* ADD WORKSPACE */
 
   /* DIALOG */
@@ -234,7 +273,8 @@ class ViewA extends React.Component {
     if(type === 'close'){
       
       if(this.state.active !== ''){
-        var view = BrowserView.fromId(this.state.workSpaces[this.state.active]);
+        var workspace = this.getWorkspaceByName(this.state.active);
+        var view = BrowserView.fromId(workspace.id);
         let window = BrowserWindow.getAllWindows()[0];
         window.setBrowserView(view);
       }
@@ -256,18 +296,17 @@ class ViewA extends React.Component {
 
   _renderWorkspaces = () => {
     let children = [];
-    console.log('plataforma: ',remote.process.platform);
     var text = remote.process.platform === 'darwin' ? 'cmd' : 'ctrl';
     var i =1;
-    globalShortcut.unregisterAll();
-    for(let workspace in this.state.workSpaces){
+
+    this.state.workSpaces.map(workspace => {
       children.push(
-        <ListItem className="bttn" key={workspace} >
+        <ListItem className="bttn" key={workspace.name} >
           {/*<span style={{borderLeft: this.activeColor(workspace) === 1 ? '1px dotted white' : 'none'}}></span>*/}
-          <div style={{backgroundImage: 'red', borderRadius: 8, borderLeft: this.activeColor(workspace) === 1 ? '3px solid #FF9735' : 'none', textAlign:'center', width: this.activeColor(workspace) === 1 ? '69px' : '72px'}}>
-          <a onClick={() => {this.openWorkSpace(workspace)}} href="#/" style={{marginLeft: this.activeColor(workspace) === 1 ? '-8px!important': 'none'}}>
-            <Tooltip title={workspace} enterDelay={700} leaveDelay={200} placement="bottom">
-              <img style={{opacity:this.activeColor(workspace), backgroundColor:'#FFFFFF'}} alt={workspace} className="workspace-img" src={this.getImageBase64(workspace)} />
+          <div style={{backgroundImage: 'red', borderRadius: 8, borderLeft: this.activeColor(workspace.name) === 1 ? '3px solid #FF9735' : 'none', textAlign:'center', width: this.activeColor(workspace.name) === 1 ? '69px' : '72px'}}>
+          <a onClick={() => {this.openWorkSpace(workspace.name)}} href="#/" style={{marginLeft: this.activeColor(workspace.name) === 1 ? '-8px!important': 'none'}}>
+            <Tooltip title={workspace.name} enterDelay={700} leaveDelay={200} placement="bottom">
+              <img style={{opacity:this.activeColor(workspace.name), backgroundColor:'#FFFFFF'}} alt={workspace.name} className="workspace-img" src={this.getImageBase64(workspace.name)} />
               {/*this.getImageBase64(workspace)*/}
             </Tooltip>
           </a>
@@ -275,11 +314,9 @@ class ViewA extends React.Component {
           <ListItemText className="secondary" secondary={`${text}+${i}`} style={{color: 'red', textAlign: 'center'}}/>
         </ListItem>
       );
-      globalShortcut.register('CommandOrControl+'+i, () => {
-        this.openWorkSpace(workspace)
-      })
       i++;
-    };
+      
+      });
     return children;
   }
 
